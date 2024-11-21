@@ -1,0 +1,130 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="flex justify-content-between flex-column sm:flex-row">
+                <div>
+                    <h5>Reporte Ventas</h5>
+                    <span>Total registros: {{ pedidos.length }}</span>
+                </div>
+                <div>
+                    <p-calendar
+                        inputId="calendar"
+                        [(ngModel)]="value5"
+                        [showIcon]="true"
+                        dateFormat="dd/mm/yy"
+                        (ngModelChange)="onDateChange($event)"
+                    ></p-calendar>
+                </div>
+            </div>
+            <p-table
+                #dt1
+                [value]="pedidos"
+                dataKey="num_pedido"
+                [rows]="50"
+                [loading]="loading"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [globalFilterFields]="['razon_social', 'userpedido']"
+                responsiveLayout="scroll"
+                [rowsPerPageOptions]="[10, 20, 50, 100]"
+                [totalRecords]="pedidos.length"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex justify-content-between flex-column sm:flex-row"
+                    >
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                #filter
+                                (input)="onGlobalFilter(dt1, $event)"
+                                placeholder="Cliente - Vendedor - Estado"
+                                class="w-full"
+                            />
+                        </span>
+                        <p-menubar [model]="tieredItems"> </p-menubar>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="razon_social">
+                            Razon Social
+                            <p-sortIcon field="razon_social"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="userpedido">
+                            Vendedor
+                            <p-sortIcon field="userpedido"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="fecha_pedido">
+                            Fecha Pedido
+                            <p-sortIcon field="fecha_pedido"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="total_neto">
+                            Total Neto
+                            <p-sortIcon field="total_neto"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="status">
+                            Estatus
+                            <p-sortIcon field="status"></p-sortIcon>
+                        </th>
+                        <th>Productos</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-pedido>
+                    <tr>
+                        <td>
+                            {{ pedido.razon_social }}
+                        </td>
+
+                        <td>
+                            <span class="image-text ml-2">{{
+                                pedido.userpedido
+                            }}</span>
+                        </td>
+                        <td>
+                            <span class="image-text ml-2">{{
+                                pedido.fecha_pedido | date : "dd/MM/yyyy"
+                            }}</span>
+                        </td>
+                        <td>
+                            <span class="image-text ml-2 font-bold"
+                                >${{
+                                    pedido.total_neto | number : "1.0-2"
+                                }}</span
+                            >
+                        </td>
+                        <td>
+                            <span
+                                [class]="
+                                    'customer-badge status-' + pedido.status
+                                "
+                            >
+                                {{ getStatusName(pedido.status) }}</span
+                            >
+                        </td>
+                        <td>
+                            <span [class]="'customer-badge status-renewal'">{{
+                                pedido.detalle.length
+                            }}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No customers found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">
+                            Loading customers data. Please wait.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

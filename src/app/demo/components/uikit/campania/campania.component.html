@@ -1,0 +1,157 @@
+<div class="grid">
+    <p-toast></p-toast>
+    <div class="col-12">
+        <p-fieldset
+            legend="Crear Campaña"
+            [toggleable]="true"
+            class="line-height-3 m-0"
+            [collapsed]="true"
+        >
+            <p-fileUpload
+            #fileUpload
+                name="file"
+                [customUpload]="true"
+                (uploadHandler)="onUpload($event)"
+                [multiple]="false"
+                accept=".xls,.xlsx"
+                [maxFileSize]="1000000"
+                chooseLabel="Seleccionar"
+                uploadLabel="Subir"
+                cancelLabel="Cancelar"
+            >
+                <ng-template pTemplate="content">
+                    <div class="p-fluid">
+                        <!-- Input para ingresar el nombre del catálogo -->
+                        <div class="field">
+                            <label for="catalogoNombre"
+                                >Nombre del catálogo</label
+                            >
+                            <input
+                                id="catalogoNombre"
+                                type="text"
+                                pInputText
+                                [(ngModel)]="nombreCatalogo"
+                                placeholder="Ingrese el nombre del catálogo"
+                            />
+                        </div>
+                    </div>
+                    <!-- Subir imagen -->
+                    <p-fileUpload
+                    #fileUploadImage
+                        mode="basic"
+                        name="imagen"
+                        accept="image/*"
+                        [maxFileSize]="1000000"
+                        (onSelect)="onImageSelect($event)"
+                    ></p-fileUpload>
+
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">
+                            {{ file.name }} - {{ file.size }} bytes
+                        </li>
+                    </ul>
+                </ng-template>
+            </p-fileUpload>
+        </p-fieldset>
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            <h5>Catálogos</h5>
+            <p-table
+                #dt1
+                [value]="catalogos"
+                dataKey="id"
+                [rows]="20"
+                [loading]="loading"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [globalFilterFields]="['nombre', 'fechaCreacion']"
+                responsiveLayout="scroll"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex justify-content-between flex-column sm:flex-row"
+                    >
+                        <span class="p-input-icon-left mb-2">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                #filter
+                                (input)="onGlobalFilter(dt1, $event)"
+                                placeholder="Search Keyword"
+                                class="w-full"
+                            />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="nombre">
+                            Campaña <p-sortIcon field="nombre"></p-sortIcon>
+                        </th>
+
+                        <th pSortableColumn="fechaCreacion">
+                            Fecha Creación<p-sortIcon
+                                field="fechaCreacion"
+                            ></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nombre">
+                            Portada<p-sortIcon field="nombre"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="nombre">
+                            Estado<p-sortIcon field="nombre"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-customer>
+                    <tr>
+                        <td>
+                            {{ customer.nombre }}
+                        </td>
+                        <td>
+                            <span class="image-text ml-2">
+                                {{
+                                    customer.fechaCreacion | date : "MM/dd/yy"
+                                }}</span
+                            >
+                        </td>
+
+                        <td>
+                            <img
+                                [src]="customer.imagen"
+                                [alt]="customer.nombre"
+                                width="100"
+                                class="shadow-4"
+                                style="
+                                    width: 76px;
+                                    height: 29px;
+                                    border-radius: 47px;
+                                "
+                            />
+                        </td>
+                        <td style="width: 200px">
+                            <span [class]="'customer-badge status-qualified'"
+                                >Activo</span
+                            >
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="8">No customers found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="8">
+                            Loading customers data. Please wait.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

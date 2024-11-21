@@ -1,0 +1,11 @@
+export enum codStatusPedido  {
+    PEDIDO_ABIERTO = 1,
+    PEDIDO_CERRADO = 2,
+    PEDIDO_ENVIADO = 3,
+    PEDIDO_NOEVIADO = 4,
+    PEDIDO_ENDESPACHO = 5,
+    PEDIDO_CANCELADO = 6,
+    PEDIDO_ENTREGADO = 7,
+    PEDIDO_ENPROGRESO = 8
+    
+}
