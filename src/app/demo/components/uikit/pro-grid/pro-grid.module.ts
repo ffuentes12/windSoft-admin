@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ListDemoComponent } from './listdemo.component';
-import { ListDemoRoutingModule } from './listdemo-routing.module';
+
 import { DataViewModule } from 'primeng/dataview';
 import { PickListModule } from 'primeng/picklist';
 import { OrderListModule } from 'primeng/orderlist';
@@ -11,21 +10,23 @@ import { DropdownModule } from 'primeng/dropdown';
 import { RatingModule } from 'primeng/rating';
 import { ButtonModule } from 'primeng/button';
 import { BadgeModule } from 'primeng/badge';
+import { ProGridComponent } from './pro-grid.component';
+import { ProGridRoutingModule } from './pro-grid-routing.module';
 
 @NgModule({
-	imports: [
-		CommonModule,
-		FormsModule,
-		ListDemoRoutingModule,
-		DataViewModule,
-		PickListModule,
-		OrderListModule,
-		InputTextModule,
-		DropdownModule,
-		RatingModule,
-		ButtonModule,
-		BadgeModule,
-	],
-	declarations: [ListDemoComponent]
+    imports: [
+        CommonModule,
+        FormsModule,
+        ProGridRoutingModule,
+        DataViewModule,
+        PickListModule,
+        OrderListModule,
+        InputTextModule,
+        DropdownModule,
+        RatingModule,
+        ButtonModule,
+        BadgeModule,
+    ],
+    declarations: [ProGridComponent],
 })
-export class ListDemoModule { }
+export class ProGridModule {}

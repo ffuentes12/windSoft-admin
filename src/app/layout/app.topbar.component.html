@@ -1,6 +1,6 @@
 <div class="layout-topbar">
     <a class="layout-topbar-logo" routerLink="">
-        <img src="assets/layout/images/{{layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white'}}.svg" alt="logo">
+        <img src="assets/layout/images/{{ layoutService.config().colorScheme === 'light' ? 'logo-dark' : 'logo-white' }}.svg" alt="logo" />
         <span>SAKAI</span>
     </a>
 
@@ -12,7 +12,8 @@
         <i class="pi pi-ellipsis-v"></i>
     </button>
 
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{ 'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible }">
+        <span *ngIf="clienteActivo"> {{ clienteActivo.razons }} </span>
         <button class="p-link layout-topbar-button">
             <i class="pi pi-calendar"></i>
             <span>Calendar</span>
@@ -25,5 +26,9 @@
             <i class="pi pi-cog"></i>
             <span>Settings</span>
         </button>
+
+        <div class="flex flex-wrap gap-2">
+            <i class="pi pi-shopping-cart mr-4 p-text-secondary" pBadge style="font-size: 2rem" [value]="cantidadProductosCarrito"></i>
+        </div>
     </div>
 </div>

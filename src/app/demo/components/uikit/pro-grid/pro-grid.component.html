@@ -91,6 +91,7 @@
                                             icon="pi pi-shopping-bag"
                                             class="p-button-secondary mr-2"
                                             style="padding: 8px; font-size: 12px"
+                                            (click)="agregarProducto(product, 'sub_embalaje')"
                                         ></button>
                                         <button
                                             pButton
@@ -99,6 +100,7 @@
                                             icon="pi pi-box"
                                             class="p-button-secondary mr-2"
                                             style="padding: 8px; font-size: 12px"
+                                            (click)="agregarProducto(product, 'embalaje')"
                                         ></button>
                                     </div>
 
@@ -115,7 +117,7 @@
                                             pRipple
                                             type="button"
                                             icon="pi pi-shopping-cart"
-                                            label="345"
+                                            [label]="product.cantidadEnCarrito"
                                             class="p-button-rounded p-button-outlined"
                                         ></button>
                                     </div>
@@ -125,36 +127,6 @@
                     </div>
                 </ng-template>
             </p-dataView>
-        </div>
-    </div>
-    <div class="col-12 xl:col-8">
-        <div class="card">
-            <h5>PickList</h5>
-            <p-pickList
-                [source]="sourceCities"
-                [target]="targetCities"
-                sourceHeader="From"
-                targetHeader="To"
-                [dragdrop]="true"
-                [responsive]="true"
-                [sourceStyle]="{ height: '250px' }"
-                [targetStyle]="{ height: '250px' }"
-            >
-                <ng-template let-city pTemplate="item">
-                    <div>{{ city.name }}</div>
-                </ng-template>
-            </p-pickList>
-        </div>
-    </div>
-
-    <div class="col-12 xl:col-4">
-        <div class="card">
-            <h5>OrderList</h5>
-            <p-orderList [value]="orderCities" header="Cities" [dragdrop]="true" [listStyle]="{ height: '250px' }">
-                <ng-template let-city pTemplate="item">
-                    <div>{{ city.name }}</div>
-                </ng-template>
-            </p-orderList>
         </div>
     </div>
 </div>

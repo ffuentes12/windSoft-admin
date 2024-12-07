@@ -1,0 +1,55 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <div class="flex justify-content-between flex-column sm:flex-row mb-3">
+                <h5>Clientes</h5>
+                <p-toast></p-toast>
+                <p-confirmPopup></p-confirmPopup>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" placeholder="Buscar cliente" class="w-full" (input)="filtrarClientes($event)" />
+                </span>
+            </div>
+            <p-accordion>
+                <p-accordionTab *ngFor="let cli of clientesFiltrados">
+                    <ng-template pTemplate="header">
+                        <span class="p-text-secondary" style="width: 200px">
+                            <!-- Ancho fijo para el RUT -->
+                            {{ cli.rutcli }}
+                        </span>
+                        <span class="text-mobile-small flex-grow-1 p-text-secondary">
+                            <!-- El nombre ocupa el resto del espacio -->
+                            {{ cli.razons }}
+                        </span>
+
+                        <span class="text-mobile-small flex-grow-1 p-text-secondary">
+                            <!-- El nombre ocupa el resto del espacio -->
+                            {{ cli.negocio }}
+                        </span>
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <ng-container *ngFor="let suc of cli.sucursales">
+                            <div
+                                class="mb-1 card"
+                                style="padding: 10px; border-left: 5px solid rgba(80, 80, 80, 0.1490196078)"
+                                [ngClass]="{ activo: clienteActivo?.rutcli === cli.rutcli && suc.cencos == clienteActivo?.cencos }"
+                                (click)="confirm($event, cli, suc)"
+                            >
+                                <span style="width: 216px; display: inline-block"> Centro costo: {{ suc.cencos }} </span>
+                                <span class="text-mobile-small flex-grow-1" style="border-left: 3px solid #06b6d4">
+                                    {{ suc.direcc + ', ' + suc.codcom + ', ' + suc.codciu }}
+                                </span>
+
+
+                            </div>
+                        </ng-container>
+                    </ng-template>
+                </p-accordionTab>
+            </p-accordion>
+        </div>
+    </div>
+
+    <div class="col-12">
+        <div class="card"></div>
+    </div>
+</div>

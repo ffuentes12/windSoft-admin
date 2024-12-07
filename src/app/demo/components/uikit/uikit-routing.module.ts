@@ -3,6 +3,12 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
     imports: [RouterModule.forChild([
+        { path: 'campania', data: { breadcrumb: 'Campáña' }, loadChildren: () => import('./campania/campania.module').then(m => m.CampaniaModule) },
+        { path: 'imagen', data: { breadcrumb: 'Imágenes' }, loadChildren: () => import('./imagenes/imagenes.module').then(m => m.ImagenesModule) },
+        { path: 'pedido', data: { breadcrumb: 'Pedido' }, loadChildren: () => import('./pedido/pedido.module').then(m => m.PedidoModule) },
+        { path: 'cliente', data: { breadcrumb: 'Cliente' }, loadChildren: () => import('./cliente/cliente.module').then(m => m.ClienteModule) },
+        { path: 'grid', data: { breadcrumb: 'Grid' }, loadChildren: () => import('./pro-grid/pro-grid.module').then(m => m.ProGridModule) },
+
         { path: 'button', data: { breadcrumb: 'Button' }, loadChildren: () => import('./button/buttondemo.module').then(m => m.ButtonDemoModule) },
         { path: 'charts', data: { breadcrumb: 'Charts' }, loadChildren: () => import('./charts/chartsdemo.module').then(m => m.ChartsDemoModule) },
         { path: 'file', data: { breadcrumb: 'File' }, loadChildren: () => import('./file/filedemo.module').then(m => m.FileDemoModule) },
@@ -17,8 +23,6 @@ import { RouterModule } from '@angular/router';
         { path: 'overlay', data: { breadcrumb: 'Overlay' }, loadChildren: () => import('./overlays/overlaysdemo.module').then(m => m.OverlaysDemoModule) },
         { path: 'panel', data: { breadcrumb: 'Panel' }, loadChildren: () => import('./panels/panelsdemo.module').then(m => m.PanelsDemoModule) },
         { path: 'table', data: { breadcrumb: 'Table' }, loadChildren: () => import('./table/tabledemo.module').then(m => m.TableDemoModule) },
-        { path: 'campania', data: { breadcrumb: 'Campáña' }, loadChildren: () => import('./campania/campania.module').then(m => m.CampaniaModule) },
-        { path: 'pedido', data: { breadcrumb: 'Pedido' }, loadChildren: () => import('./pedido/pedido.module').then(m => m.PedidoModule) },
         { path: 'tree', data: { breadcrumb: 'Tree' }, loadChildren: () => import('./tree/treedemo.module').then(m => m.TreeDemoModule) },
         { path: 'menu', data: { breadcrumb: 'Menu' }, loadChildren: () => import('./menus/menus.module').then(m => m.MenusModule) },
         { path: '**', redirectTo: '/notfound' }

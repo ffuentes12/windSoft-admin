@@ -5,7 +5,14 @@
 /tmp
 /out-tsc
 /bazel-out
-
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+.android/*
+.vs/*
 # Node
 /node_modules
 npm-debug.log

@@ -103,6 +103,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.getResumen(event.value.value);
             this.getClientesPareto(event.value.value);
             this.getProductosPareto(event.value.value);
+            this.getResumenRegion(event.value.value);
+            
             console.log('Nueva opción seleccionada:', event.value);
         } else {
             console.error('El evento no contiene un valor válido:', event);
@@ -120,6 +122,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.getClientesPareto();
         this.getProductosPareto();
         this.getResumenVenedor();
+        this.getResumenRegion();
         this.initChart();
         this.productService
             .getProductsSmall()
@@ -330,13 +333,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
             console.error('Error al obtener el resumen de ventas:', error);
         }
     }
+
+    async getResumenRegion(valor: string = 'mesActual'): Promise<void> {
+        try {
+            // Llama al endpoint y espera los datos en el formato esperado
+            const data: any = await firstValueFrom(
+                this.apiService.get<any>('dashboard/ventas-por-region', {
+                    intervalo: valor,
+                })
+            );
+            // Inicializa el gráfico con los datos obtenidos
+            this.initRegion(data);
+        } catch (error) {
+            console.error('Error al obtener el resumen de ventas:', error);
+        }
+    }
     formatToMillions(value: number): string {
         if (value >= 1000000) {
-          // Divide por 1,000,000, trunca el resultado y agrega el sufijo "mi"
-          return Math.floor(value / 1000000) + '.' + Math.floor((value % 1000000) / 100000) + ' mi';
+            // Divide por 1,000,000, trunca el resultado y agrega el sufijo "mi"
+            return (
+                Math.floor(value / 1000000) +
+                '.' +
+                Math.floor((value % 1000000) / 100000) +
+                ' mi'
+            );
         }
         return value.toString();
-      }
+    }
     initCharts(data: any) {
         const nombreMesActual = new Date().toLocaleString('default', {
             month: 'long',
@@ -373,35 +396,72 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 },
             ],
         };
+    }
 
+    initRegion(data: any) {
+        // Obtén el estilo computado del documento
+        const computedStyle = getComputedStyle(document.documentElement);
+    
+        // Lista de colores predeterminados (puedes agregar más si es necesario)
+        const defaultColors = [
+            computedStyle.getPropertyValue('--indigo-500'),
+            computedStyle.getPropertyValue('--purple-500'),
+            computedStyle.getPropertyValue('--teal-500'),
+            computedStyle.getPropertyValue('--blue-500'),
+            computedStyle.getPropertyValue('--green-500'),
+            computedStyle.getPropertyValue('--orange-500'),
+            computedStyle.getPropertyValue('--red-500'),
+            computedStyle.getPropertyValue('--cyan-500'),
+            computedStyle.getPropertyValue('--pink-500'),
+            computedStyle.getPropertyValue('--yellow-500'),
+        ];
+    
+        const defaultHoverColors = [
+            computedStyle.getPropertyValue('--indigo-400'),
+            computedStyle.getPropertyValue('--purple-400'),
+            computedStyle.getPropertyValue('--teal-400'),
+            computedStyle.getPropertyValue('--blue-400'),
+            computedStyle.getPropertyValue('--green-400'),
+            computedStyle.getPropertyValue('--orange-400'),
+            computedStyle.getPropertyValue('--red-400'),
+            computedStyle.getPropertyValue('--cyan-400'),
+            computedStyle.getPropertyValue('--pink-400'),
+            computedStyle.getPropertyValue('--yellow-400'),
+        ];
+    
+        // Genera colores dinámicos asignando uno por uno de la lista (repite si es necesario)
+        const backgroundColors = data.regiones.map(
+            (_: string, index: number) => defaultColors[index % defaultColors.length].trim()
+        );
+    
+        const hoverColors = data.regiones.map(
+            (_: string, index: number) => defaultHoverColors[index % defaultHoverColors.length].trim()
+        );
+    
+        // Configuración de los datos del gráfico
         this.pieData = {
-            labels: ['A', 'B', 'C'],
+            labels: data.regiones,
             datasets: [
                 {
-                    data: [540, 325, 702],
-                    backgroundColor: [
-                        documentStyle.getPropertyValue('--indigo-500'),
-                        documentStyle.getPropertyValue('--purple-500'),
-                        documentStyle.getPropertyValue('--teal-500'),
-                    ],
-                    hoverBackgroundColor: [
-                        documentStyle.getPropertyValue('--indigo-400'),
-                        documentStyle.getPropertyValue('--purple-400'),
-                        documentStyle.getPropertyValue('--teal-400'),
-                    ],
+                    data: data.ventas,
+                    backgroundColor: backgroundColors,
+                    hoverBackgroundColor: hoverColors,
                 },
             ],
         };
-
+    
+        // Opciones del gráfico
         this.pieOptions = {
             plugins: {
                 legend: {
                     labels: {
                         usePointStyle: true,
-                        color: textColor,
+                        color: computedStyle.getPropertyValue('--text-color').trim(),
                     },
                 },
             },
         };
     }
+    
+    
 }
