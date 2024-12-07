@@ -6,7 +6,7 @@
                 #dv
                 [value]="productosRespuesta.productos"
                 [paginator]="true"
-                [rows]="20"
+                [rows]="200"
                 filterBy="despro"
                 [sortField]="sortField"
                 [sortOrder]="sortOrder"
@@ -73,7 +73,7 @@
                                         <span [class]="'font-semibold'">SKU: {{ product.codpro }}</span>
                                     </div>
                                     <!-- 	<span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
-                                    <span [class]="'product-badge status-instock'">stock: {{ product.stocks }}</span>
+                                    <span [class]="'product-badge status-instock'">stock: {{ product.nuevoStock }}</span>
                                 </div>
 
                                 <div class="flex flex-column align-items-center text-center mb-2">
@@ -87,7 +87,7 @@
                                         <button
                                             pButton
                                             type="button"
-                                            [label]="'+' + product.sub_embalaje"
+                                            [label]="'+' + product.multip"
                                             icon="pi pi-shopping-bag"
                                             class="p-button-secondary mr-2"
                                             style="padding: 8px; font-size: 12px"
@@ -109,7 +109,7 @@
                                     <!-- 	<p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
                                 </div>
                                 <div class="flex align-items-center justify-content-between">
-                                    <span class="text-2xl font-semibold">${{ product.lista_precio[0].prelis | number : '1.0-0' }}</span>
+                                    <span class="text-2xl font-semibold">${{ product.nuevoPrecio | number : '1.0-0' }}</span>
 
                                     <div class="flex flex-wrap gap-2">
                                         <button

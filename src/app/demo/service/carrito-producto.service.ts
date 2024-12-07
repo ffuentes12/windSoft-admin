@@ -48,7 +48,7 @@ export class CarritoProductoService {
   }
 
   /**
-   * Simplifica la lógica para agregar productos usando datos del producto y tipo de cantidad.
+   * funcion que realiza la logica .
    */
   async agregarProductoSimplificado(
     rutcli: string,
@@ -56,6 +56,7 @@ export class CarritoProductoService {
     producto: Producto,
     tipoCantidad: 'embalaje' | 'sub_embalaje'
   ): Promise<void> {
+    //TODO: CONTROLAR NO PASARSE del stock y respetar el embalaje y multiplo
     const cantidad = Number(producto[tipoCantidad]);
     const neto = cantidad * Number(producto.lista_precio[0]?.prelis || 0);
     const iva = neto * 0.19; // IVA del 19%

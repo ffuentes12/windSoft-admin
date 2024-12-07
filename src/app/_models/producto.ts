@@ -1,8 +1,8 @@
 export interface RespuestaProductos {
-    totalRegistros: number;  // Total de registros disponibles
-    paginaActual: number;    // Número de la página actual
+    totalRegistros: number; // Total de registros disponibles
+    paginaActual: number; // Número de la página actual
     cantidadPorPagina: number; // Cantidad de registros por página
-    productos: Producto[];   // Lista de productos
+    productos: Producto[]; // Lista de productos
 }
 
 export interface Producto {
@@ -22,23 +22,25 @@ export interface Producto {
     lista_fotos_uri: ListaFotoUri[];
     lista_precio: ListaPrecio[];
 
-    cantidadEnCarrito?: number; // 
-    stockPorNegocio?:number
-  }
-  
-  export interface StockSegment {
+    cantidadEnCarrito?: number; //
+    nuevoStock?: number;
+    nuevoPrecio?: number;
+    multip?: string;
+}
+
+export interface StockSegment {
     negocio: string;
     stock: number;
     _id: string;
-  }
-  
-  export interface ListaFotoUri {
+}
+
+export interface ListaFotoUri {
     _id: string;
     codpr: number;
     uri: string;
-  }
-  
-  export interface ListaPrecio {
+}
+
+export interface ListaPrecio {
     codpro: string;
     prelis: number;
     codlve: string;
@@ -46,10 +48,8 @@ export interface Producto {
     multip: string;
     default: boolean;
     _id: string;
-  }
-  
+}
 
- 
 export interface FiltroProductos {
     codpro?: string;
     despro?: string;
@@ -67,9 +67,9 @@ export interface FiltroProductos {
     orden?: string; // Campo para ordenar
     total?: number;
     lista_precio?: ListaPrecio[]; // Arreglo de objetos con codlve y codlpr
-  }
-  
-  export interface ListaPrecio {
-      codlve: string; // Código del nivel de precio
-      codlpr: string; // Código de la lista de precio
-  }
+}
+
+export interface ListaPrecio {
+    codlve: string; // Código del nivel de precio
+    codlpr: string; // Código de la lista de precio
+}
